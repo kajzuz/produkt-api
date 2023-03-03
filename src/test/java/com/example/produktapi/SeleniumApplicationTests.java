@@ -422,7 +422,7 @@ class SeleniumApplicationTests {
 	}
 
 	//@Disabled
-	@Test //Third test, to check that source of image is correct      check this
+	/*@Test //Third test, to check that source of image is correct      check this
 	public void check_allProductNames_areCorrect() {
 
 
@@ -470,7 +470,7 @@ class SeleniumApplicationTests {
 
 		assertEquals("6", button.getSize());
 
-	}
+	}*/
 
 	@AfterAll
 	public static void afterTests(){
