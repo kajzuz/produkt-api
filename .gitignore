@@ -28,7 +28,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-!**/src/test/com.example.produktapi/SeleniumApplicationTests.java
+**/src/test/java/com/example/produktapi/SeleniumTests.java
 
 ### VS Code ###
 .vscode/

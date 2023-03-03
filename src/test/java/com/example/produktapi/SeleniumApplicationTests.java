@@ -1,10 +1,7 @@
 package com.example.produktapi;
 
 import org.checkerframework.checker.units.qual.Time;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,27 +21,35 @@ import java.util.concurrent.TimeUnit;
 import static org.aspectj.bridge.Version.getText;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+
 @SpringBootTest
 class SeleniumApplicationTests {
 
-	/*@BeforeEach
-	public void beforeTests(){
+	private static WebDriver driver;
 
-		WebDriver driver = new ChromeDriver();
+	@BeforeAll
+	public static void beforeTests(){
 
-		driver.quit();
+		//Get the webDriver that we are going to use
+		driver = new ChromeDriver();
 
-	}*/
+		String url = "https://java22.netlify.app/";
+
+		//Get the driver to navigate to our website
+		driver.navigate().to(url);
+
+	}
+
 
 	@Timeout(3)
 
-	//APPROVED TESTs
+	//APPROVED TESTS
 
+	//@Disabled
 	@Test
 	public void check_websiteTitle() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -52,15 +57,12 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("Webbutik",driver.getTitle(),"Title is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test
 	public void check_h1Text() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -70,16 +72,14 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("Testdriven utveckling - projekt",h1Text,"Title is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
+
 	}
 
 
+	//@Disabled
 	@Test
 	public void check_totalAmountOfProducts() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -91,15 +91,14 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals(20, productsTotalAmount.size(), "Amount of products not the same as expected");
 
-		//Closes the website window after test
-		driver.quit();
+
 	}
 
+
+	//@Disabled
 	@Test //First price check
 	public void check_TotalPrice_forFjallravenBackpack_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -117,15 +116,12 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("109.95", backpackPrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test //Second price check
 	public void check_TotalPrice_forMensCasualPremiumSlimFitTShirt_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -140,15 +136,12 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("22.3", mensTShirtPrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test //Third price check
 	public void check_TotalPrice_forSolGoldPetiteMicropave_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -163,17 +156,14 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("168", goldPetitePrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
 
 	//WELL PASSED TESTS
+	//@Disabled
 	@Test
 	public void check_electronicsCategoryName() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -188,16 +178,12 @@ class SeleniumApplicationTests {
 		assertEquals("electronics", electronics, "Category name of products not the same as expected");
 
 
-
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test
 	public void check_jeweleryCategoryName() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -213,15 +199,12 @@ class SeleniumApplicationTests {
 		assertEquals("jewelery", jewelery, "Category name of products not the same as expected");
 
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test
 	public void check_mensClothingCategoryName() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -236,17 +219,12 @@ class SeleniumApplicationTests {
 		//men's clothing category name matches
 		assertEquals("men's clothing", mensClothing, "Category name of products not the same as expected");
 
-
-
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test
 	public void check_womensClothingCategoryName() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -261,17 +239,13 @@ class SeleniumApplicationTests {
 		//women's clothing category name matches
 		assertEquals("women's clothing", womensClothing, "Category name of products not the same as expected");
 
-
-		//Closes the website window after test
-		driver.quit();
 	}
 
 
+	//@Disabled
 	@Test //First price check
 	public void check_totalPrice_forWomensGoldAndSilverDragonStationChainBracelet_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -286,15 +260,13 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("695", womenChainBraceletPrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
+
 	}
 
+	//@Disabled
 	@Test //Second price check
 	public void check_totalPrice_forSanDiskSSDPLUS_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -309,15 +281,12 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("109", sanDiskSSDPLUSPrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
+	//@Disabled
 	@Test //Third price check
 	public void check_totalPrice_forGamingDrive_product() {
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -332,17 +301,14 @@ class SeleniumApplicationTests {
 		//Test if expected title matches websites title
 		assertEquals("114", gamingDrivePrice,"Price is not same as expected");
 
-		//Closes the website window after test
-		driver.quit();
+
 	}
 
 
-
+	//@Disabled
 	@Test //First test, to check that image is visible
 	public void check_forImagesVisible_acerTv(){
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -352,19 +318,15 @@ class SeleniumApplicationTests {
 			)));
 
 
-
 		assertTrue(productImageAcerTv.isDisplayed(), "Image does not want to load");
 
-		//Closes the website window after test
-		driver.quit();
 
 	}
 
+	//@Disabled
 	@Test //Second test, to check that image is visible
 	public void check_forImagesVisible_solGoldPetiteMicropave(){
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -376,16 +338,13 @@ class SeleniumApplicationTests {
 
 		assertTrue(productImageBracelet.isDisplayed(), "Image does not want to load");
 
-		//Closes the website window after test
-		driver.quit();
 
 	}
 
+	//@Disabled
 	@Test //Third test, to check that image is visible
 	public void check_forImagesVisible_whiteGoldPlatedPrincess(){
 
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -397,17 +356,13 @@ class SeleniumApplicationTests {
 
 		assertTrue(productImageRing.isDisplayed(), "Image does not want to load");
 
-		//Closes the website window after test
-		driver.quit();
 
 	}
 
+	//@Disabled
 	@Test //First test, to check that source of image is correct
 	public void check_womensTshirtShort_sourceIsCorrect() {
 
-
-			//Get the webDriver that we are going to use
-			WebDriver driver = new ChromeDriver();
 
 			//Navigate to the website that we are testing
 			driver.get("https://java22.netlify.app/");
@@ -422,17 +377,13 @@ class SeleniumApplicationTests {
 
 			assertEquals("https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",source, "Source is not correct");
 
-			//Closes the website window after test
-			driver.quit();
 
 		}
 
+	//@Disabled
 	@Test //Second test, to check that source of image is correct
 	public void check_samsungMonitor_sourceIsCorrect() {
 
-
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		//Navigate to the website that we are testing
 		driver.get("https://java22.netlify.app/");
@@ -447,16 +398,12 @@ class SeleniumApplicationTests {
 
 		assertEquals("https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",source, "Source is not correct");
 
-		//Closes the website window after test
-		driver.quit();
+
 	}
 
+	//@Disabled
 	@Test //Third test, to check that source of image is correct
 	public void check_mensCottonJacket_sourceIsCorrect() {
-
-
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 
 		//Navigate to the website that we are testing
@@ -472,16 +419,12 @@ class SeleniumApplicationTests {
 
 		assertEquals("https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",source, "Source is not correct");
 
-		//Closes the website window after test
-		driver.quit();
 	}
 
-	/*@Test //Third test, to check that source of image is correct      check this
+	//@Disabled
+	@Test //Third test, to check that source of image is correct      check this
 	public void check_allProductNames_areCorrect() {
 
-
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		String expectedProductName = "White Gold Plated Princess";
 
@@ -492,8 +435,9 @@ class SeleniumApplicationTests {
 
 		List<WebElement> productsNames = driver.findElements(By.className("card-title"));
 
-		boolean found = false;
 
+
+		boolean found = false;
 		for (WebElement allProductNames : productsNames){
 
 			String actualProductName = allProductNames.getText();
@@ -502,23 +446,16 @@ class SeleniumApplicationTests {
 				found = true;
 				return;
 			}
-
-			assertTrue(actualProductName.contains(expectedProductName), "Product name does not match!");
-
 		}
+		assertTrue(found, "Product name does not match!");
 
 
-		//Closes the website window after test
-		driver.quit();
-	}*/
+	}
 
-
-	/*@Test //check this
+	//@Disabled
+	@Test //check this
 	public void check_categoryClicks() {
 
-
-		//Get the webDriver that we are going to use
-		WebDriver driver = new ChromeDriver();
 
 		Actions action = new Actions(driver);
 
@@ -533,10 +470,14 @@ class SeleniumApplicationTests {
 
 		assertEquals("6", button.getSize());
 
+	}
 
-		//Closes the website window after test
+	@AfterAll
+	public static void afterTests(){
+
 		driver.quit();
-	}*/
+
+	}
 
 
 }
