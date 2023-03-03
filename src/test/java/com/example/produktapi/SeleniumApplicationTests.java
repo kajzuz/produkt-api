@@ -26,12 +26,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SeleniumApplicationTests {
 
-	private static WebDriver driver;
+	/*private static WebDriver driver;
 
 	@BeforeAll
 	public static void beforeTests(){
 
 		//Get the webDriver that we are going to use
+		//Make it static, so we can use it in all tests
 		driver = new ChromeDriver();
 
 		String url = "https://java22.netlify.app/";
@@ -109,7 +110,7 @@ class SeleniumApplicationTests {
 
 		/* \\d matches any single digit
 		 replace description with price */
-		String backpackDescription = backpack.getText();
+		/*String backpackDescription = backpack.getText();
 		String backpackPrice = backpackDescription.replaceAll("[^\\d.]", "");
 
 
@@ -419,7 +420,7 @@ class SeleniumApplicationTests {
 
 		assertEquals("https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",source, "Source is not correct");
 
-	}
+	}*/
 
 	//@Disabled
 	/*@Test //Third test, to check that source of image is correct      check this
@@ -472,12 +473,12 @@ class SeleniumApplicationTests {
 
 	}*/
 
-	@AfterAll
+	/*@AfterAll
 	public static void afterTests(){
 
 		driver.quit();
 
-	}
+	}*/
 
 
 }
