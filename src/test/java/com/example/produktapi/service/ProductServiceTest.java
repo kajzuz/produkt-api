@@ -80,16 +80,17 @@ class ProductServiceTest {
         //given, setup for test
         String category = "Electronic";
         Product product = new Product("Usb", 150.0,category, "Good for computers","urlForUsbImage");
+        given(repository.findByCategory(category)).willReturn(List.of(product));
+
 
         //when, method invocation
-        underTest.getProductsByCategory(category);
+        List <Product> categoryResult = underTest.getProductsByCategory(category);
 
         //then, what we expect
         Assertions.assertAll(
                 ()-> verify(repository,times(1)).findByCategory(category),
                 ()-> verifyNoMoreInteractions(repository),
-                ()-> assertFalse(category.isEmpty())
-
+                ()-> assertFalse(categoryResult.isEmpty())
         );
 
     }
@@ -163,6 +164,7 @@ class ProductServiceTest {
         //then, what we expect
         //checks that findById exists and is called one time
         verify(repository,times(1)).findById(id);
+        assertTrue(repository.findById(id).isPresent());
 
     }
 
