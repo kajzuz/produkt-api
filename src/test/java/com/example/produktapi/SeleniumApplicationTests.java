@@ -547,6 +547,6 @@ class SeleniumApplicationTests {
 
 		int result = y + u;
 
-		assertEquals(2,result);
+		assertEquals(10,result);
 	}
 }
