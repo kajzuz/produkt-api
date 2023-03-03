@@ -539,14 +539,4 @@ class SeleniumApplicationTests {
 	}*/
 
 
-	@Test
-	public void wrong(){
-
-		int y = 9;
-		int u = 1;
-
-		int result = y + u;
-
-		assertEquals(10,result);
-	}
 }
