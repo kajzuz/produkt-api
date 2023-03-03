@@ -9,6 +9,8 @@ import com.example.produktapi.model.Product;
 
 import java.util.List;
 
+
+@CrossOrigin // @CrossOrigin page can be requested from another domain
 @RestController
 public class ProductController {
 
