@@ -38,11 +38,12 @@ class ProductServiceTest {
 
     @BeforeAll
     public static void beforeTests(){
+
         System.out.println("\nRunning tests...\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨");
     }
 
 
-    @DisplayName("Get all products")
+    @DisplayName("Get all products, then one interaction with findAll() should be made")
     @Test
     public void whenGetAllProducts_theExactlyOneInteractionWithRepositoryMethodFindAll() {
 
@@ -50,22 +51,22 @@ class ProductServiceTest {
         underTest.getAllProducts();
 
         //then, what we expect
-        //checks if the method is called (we can reach it) in this case one time
+        //checks if the method is called, in this case one time
         Assertions.assertAll(
-                ()-> BDDMockito.verify(repository,times(1)).findAll(),
+                ()-> verify(repository,times(1)).findAll(),
                 ()-> verifyNoMoreInteractions(repository)
         );
     }
 
-    @DisplayName("Get all categories")
+
+    @DisplayName("Get all categories, then one interaction with findAllCategories() should be made")
     @Test
-    public void whenGetAllCategories_thenExactlyOneInteractionWithRepositoryMethodsGetByCategory() {
+    public void whenGetAllCategories_thenExactlyOneInteractionWithRepositoryMethodFindAllCategories() {
 
         //when, method invocation
         underTest.getAllCategories();
 
         //then, what we expect
-        //checks that we are able to get the method only one time and no more
         Assertions.assertAll(
                 ()-> verify(repository,times(1)).findAllCategories(),
                 ()-> verifyNoMoreInteractions(repository)
@@ -73,7 +74,8 @@ class ProductServiceTest {
 
     }
 
-    @DisplayName("Get products by category")
+
+    @DisplayName("Get products by a category that exists, that should give us a non empty list")
     @Test
     public void givenAnExistingCategory_whenGetProductsByCategory_thenReceivesANonEmptyList() {
 
@@ -95,8 +97,9 @@ class ProductServiceTest {
 
     }
 
+
     //Normal flow
-    @DisplayName("Add Product")
+    @DisplayName("When adding product the save method should be called")
     @Test
     public void givenProductTitle_whenAddingAProduct_thenSaveMethodShouldBeCalled(){
 
@@ -114,14 +117,15 @@ class ProductServiceTest {
         //was passed in when our mocked repository was called.
         Assertions.assertAll(
                 ()-> verify(repository).save(productsCaptor.capture()),
-                ()-> assertEquals(product,productsCaptor.getValue())
+                ()-> assertEquals(product, productsCaptor.getValue())
         );
     }
 
+
     //Wrong flow
-    @DisplayName("Add product with duplicated title")
+    @DisplayName("Add product with duplicated title, then throw exception")
     @Test
-    public void givenProductTitle_whenAddingAProductWithDuplicatedTitle_thenThrowError(){
+    public void givenProductTitle_whenAddingAProductWithDuplicatedTitle_thenThrowException(){
 
         //given, setup for test
         String title = "Shirt";
@@ -145,10 +149,11 @@ class ProductServiceTest {
 
     }
 
+
     //Normal flow
-    @DisplayName("Get existing product id")
+    @DisplayName("Check that existing product id is present")
     @Test
-    public void givenProductId_whenExistingProductId_thenThatAlreadyExistsInDatabaseCheckOneInteractionIsMade() {
+    public void givenProductId_whenExistingProductId_thenThatAlreadyExistsInDatabase_checkProductIdIsPresent() {
 
         //given, setup for test
         Integer id = 2;
@@ -168,33 +173,35 @@ class ProductServiceTest {
 
     }
 
+
     //Wrong flow, any instead of id
-    @DisplayName("Get non existing product")
+    @DisplayName("When getting non existing product id then throw exception")
     @Test
     public void givenProductId_whenGetNonExistingProductId_thenThrowException(){
 
         //given, setup for test
+        Integer id = 3;
         Product product = new Product("Dress",34.0,"Clothes","Casual","urlForDressImage");
-        given(repository.findById(any())).willReturn(Optional.empty());
+        given(repository.findById(id)).willReturn(Optional.empty());
 
         //then, what we expect
         //Trying to get a product id that not exists and then gives exception
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 //when, method invocation
-                ()-> underTest.getProductById(any()));
+                ()-> underTest.getProductById(id));
 
         //then, what we expect
         Assertions.assertAll(
-                ()-> verify(repository,times(1)).findById(any()),
-                ()-> assertEquals("Produkt med id null hittades inte",exception.getMessage())
+                ()-> verify(repository,times(1)).findById(id),
+                ()-> assertEquals("Produkt med id 3 hittades inte",exception.getMessage())
         );
     }
 
 
     //Normal flow
-    @DisplayName("Update Product")
+    @DisplayName("Update product, then product should be updated")
     @Test
-    public void givenProductId_whenUpdateProduct_thenSaveProductAsUpdated() {
+    public void givenProductId_whenUpdateProduct_thenProductShouldBeUpdated() {
 
         //given, setup for test
         Integer id = 8;
@@ -210,7 +217,7 @@ class ProductServiceTest {
         Product updatedResult = underTest.updateProduct(productNew,id);
 
 
-        //then //then, what we expect
+        //then, what we expect
         Assertions.assertAll(
                 ()-> verify(repository,times(1)).findById(id),
                 ()-> assertEquals(productNew.getTitle(), updatedResult.getTitle())
@@ -218,31 +225,36 @@ class ProductServiceTest {
 
     }
 
+
+
     //Wrong flow
-    @DisplayName("Update a product that is not found")
+    @DisplayName("Update a product that is not found then throw exception")
     @Test
     public void givenProductId_whenUpdatedProductNotFound_thenThrowException() {
 
         //given, setup for test
+        Integer id = 6;
         Product product = new Product("Necklace", 1800.0,"Jewelry", "Bling bling","urlForNecklaceImage");
-        given(repository.findById(any())).willReturn(Optional.empty());
+        given(repository.findById(id)).willReturn(Optional.empty());
 
         //then, what we expect
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 //when, method invocation
-                ()-> underTest.updateProduct(product,any()));
+                ()-> underTest.updateProduct(product,id));
 
         //then, what we expect
         Assertions.assertAll(
-                ()-> verify(repository,times(1)).findById(any()),
-                ()-> assertEquals("Produkt med id null hittades inte",exception.getMessage())
+                ()-> verify(repository,times(1)).findById(id),
+                ()-> assertEquals("Produkt med id 6 hittades inte",exception.getMessage())
         );
 
 
     }
 
+
+
     //Normal flow
-    @DisplayName("Delete product")
+    @DisplayName("Delete product, then it should be deleted")
     @Test
     public void givenProductId_whenDeletingProductId_thenItShouldBeDeleted() {
 
@@ -259,24 +271,24 @@ class ProductServiceTest {
         //then, what we expect
         Assertions.assertAll(
                 ()-> verify(repository,times(1)).deleteById(id),
-                ()-> assertEquals(product.getId(),null)
+                ()-> assertNull(product.getId())
         );
 
 
     }
 
+
+
     //Wrong flow
-    @DisplayName("Delete product that does not exist")
+    @DisplayName("Delete product that does not exist, then throw exception")
     @Test
-    public void givenProductId_whenDeletingProduct_thenIfNotExistingThrowException() {
+    public void givenProductId_whenDeletingProduct_thenIfProductDoesNotExistsThrowException() {
 
         //given, setup for test
-        Integer id = 3;
+        Integer id = 11;
         Product product = new Product("Ring", 1200.0,"Jewelry", "Bling bling","urlForRingImage");
         given(repository.findById(id)).willReturn(Optional.empty());
 
-
-        //repository.delete(product);
 
         //then, what we expect
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -286,13 +298,9 @@ class ProductServiceTest {
         //then, what we expect
         Assertions.assertAll(
                 ()-> verify(repository,times(1)).findById(id),
-                ()-> assertEquals("Produkt med id 3 hittades inte",exception.getMessage())
+                ()-> assertEquals("Produkt med id 11 hittades inte",exception.getMessage())
         );
     }
 
-    @AfterAll
-    public static void afterTests(){
-        System.out.println("\nAll tests was successful!\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨");
-    }
 
 }

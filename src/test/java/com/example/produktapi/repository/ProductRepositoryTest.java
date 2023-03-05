@@ -20,23 +20,23 @@ class ProductRepositoryTest {
     //The tests are run against the database
     //Repository -> Connection to database
 
-    //Instance to be able to pass information
 
     // @Autowired helps us access repositories, like a small constructor,
     // we save code by this instead of writing the whole instantiation
-    // Make an instance if Product repository
+    // Make an instance of Product repository
     @Autowired
     private ProductRepository underTest;
 
 
     @BeforeAll
     public static void beforeTests(){
+
         System.out.println("\nRunning tests...\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨");
     }
 
 
     @DisplayName("Find all from repository")
-    @Test //Find all from repository
+    @Test
     public void testingOurRepository_byFindAll() {
 
         List<Product> products = underTest.findAll();
@@ -44,7 +44,7 @@ class ProductRepositoryTest {
     }
 
     @DisplayName("Get existing category returned")
-    @Test //Find by category 1
+    @Test
     public void whenSearchingForAnExistingCategory_thenReturnThatCategory() {
 
         //given
@@ -59,12 +59,12 @@ class ProductRepositoryTest {
         Assertions.assertAll(
                 ()->assertFalse(categoryExists.isEmpty()),
                 ()->assertTrue(categoryExists.contains(product)),
-                ()->assertEquals(product.getCategory(),"Electronic")
+                ()->assertEquals("Electronic",product.getCategory())
         );
     }
 
-    @DisplayName("List empty if category not existing")
-    @Test //Find by category 2
+    @DisplayName("List is empty if category not existing")
+    @Test
     public void whenSearchingForAnNonExistingCategory_thenReturnEmptyList() {
 
         //when
@@ -76,8 +76,8 @@ class ProductRepositoryTest {
 
     }
 
-    @DisplayName("Get existing title returned ")
-    @Test // Find by title 1
+    @DisplayName("Get existing title returned")
+    @Test
     public void whenSearchingForAnExistingTitle_thenReturnThatProduct() {
 
         //given
@@ -93,14 +93,14 @@ class ProductRepositoryTest {
         Assertions.assertAll(
             ()-> assertTrue(optionalProduct.isPresent()),
             ()-> assertFalse(optionalProduct.isEmpty()),
-            ()-> assertEquals(optionalProduct.get().getTitle(), title),
+            ()-> assertEquals(title, optionalProduct.get().getTitle()),
             ()-> assertNotNull(optionalProduct)
         );
 
     }
 
     @DisplayName("Optional empty if title not existing")
-    @Test //Find by title 2
+    @Test
     public void whenSearchingForNonExistingTitle_thenReturnEmptyOptional(){
 
         //given
@@ -114,13 +114,13 @@ class ProductRepositoryTest {
         Assertions.assertAll(
                 ()-> assertTrue(optionalProduct.isEmpty()),
                 ()-> assertFalse(optionalProduct.isPresent()),
-                ()-> assertThrows(NoSuchElementException.class, ()-> optionalProduct.get())//
+                ()-> assertThrows(NoSuchElementException.class, ()-> optionalProduct.get())
         );
 
     }
 
-    @DisplayName("Get correct category size returned")
-    @Test //Find by all categories 1
+    @DisplayName("Get correct category size returned for all categories")
+    @Test
     public void whenSearchingForAllCategories_thenReturnTheCorrectCategorySize() {
 
         //when
@@ -129,13 +129,13 @@ class ProductRepositoryTest {
         //then
         Assertions.assertAll(
                 ()-> assertFalse(categoryAll.isEmpty()),
-                ()-> assertEquals(categoryAll.size(),4)
+                ()-> assertEquals(4, categoryAll.size())
         );
 
     }
 
-    @DisplayName("All categories check for no duplicates")
-    @Test //Find all categories 2
+    @DisplayName("Check that all categories has no duplicates")
+    @Test
     public void whenSearchingForAllCategories_thenMakeSureThereAreNoDuplicates() {
 
         //Return a stream of distinct element to the list categoryAll
@@ -143,22 +143,15 @@ class ProductRepositoryTest {
         //when
         List<String> categoryAll = underTest.findAllCategories()
                 .stream()
-                .distinct()
-                .collect(Collectors.toList());
+                .distinct().toList();
 
 
         //then
         Assertions.assertAll(
-                ()->assertEquals(categoryAll.size(),4),
-                ()->assertFalse(categoryAll.size() > 4),
-                ()->assertTrue(categoryAll.size() == 4)
+                ()->assertEquals(4, categoryAll.size()),
+                ()->assertFalse(categoryAll.size() > 4)
         );
 
-    }
-
-    @AfterAll
-    public static void afterTests(){
-        System.out.println("\nAll tests was successful!\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨");
     }
 
 }
